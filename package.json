@@ -1,0 +1,12 @@
+{
+  "name": "hypercore-home-assignment",
+  "private": true,
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev -w packages/backend",
+    "dev:frontend": "npm start -w packages/frontend"
+  }
+}

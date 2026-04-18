@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: packages/backend/Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: "4000"
+      DB_PATH: /app/data/database.sqlite
+      FRED_URL: https://fred.stlouisfed.org/series/PRIME
+      SCRAPE_CRON: "0 0 * * *"
+      SCRAPE_TIMEOUT: "120000"
+    volumes:
+      - db_data:/app/data
+
+  frontend:
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
+      args:
+        REACT_APP_GRAPHQL_URL: /graphql
+        REACT_APP_PAGE_SIZE: "5"
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
