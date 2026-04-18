@@ -40,56 +40,55 @@ From the repo root:
 
 ```bash
 npm install
+npm install react-scripts@5.0.1 --legacy-peer-deps -w packages/frontend
+npm install ajv@8 --legacy-peer-deps
 ```
 
-### Backend
+> The extra commands work around npm workspaces hoisting issues: `react-scripts` may be installed as a hollow stub, and `ajv@8` (required by `react-scripts`'s webpack config) may not be hoisted automatically.
 
-1. Create the environment file:
+### Environment files
 
 ```bash
 cp packages/backend/.env.example packages/backend/.env
-```
-
-The defaults work out of the box. Available variables:
-
-| Variable        | Default                                      | Required | Description                              |
-|-----------------|----------------------------------------------|----------|------------------------------------------|
-| `PORT`          | —                                            | Yes      | Port the GraphQL server listens on       |
-| `DB_PATH`       | —                                            | Yes      | Path to the SQLite database file         |
-| `FRED_URL`      | —                                            | Yes      | FRED series page URL for prime rate data |
-| `SCRAPE_CRON`   | `0 0 * * *`                                  | No       | Cron expression for periodic re-scraping |
-| `SCRAPE_TIMEOUT`| `120000`                                     | No       | Scrape timeout in milliseconds           |
-
-2. Start the backend:
-
-```bash
-npm run dev:backend
-```
-
-The server starts on `http://localhost:4000`. Database migrations run automatically on first launch and create the SQLite file at the configured `DB_PATH`.
-
-### Frontend
-
-1. Create the environment file:
-
-```bash
 cp packages/frontend/.env.example packages/frontend/.env
 ```
 
-Available variables:
+Backend variables:
 
-| Variable                 | Default                            | Description                        |
-|--------------------------|------------------------------------|------------------------------------|
-| `REACT_APP_GRAPHQL_URL`  | `http://localhost:4000/graphql`    | GraphQL endpoint for Apollo Client |
-| `REACT_APP_PAGE_SIZE`    | `5`                                | Number of loans shown per page     |
+| Variable         | Required | Description                              |
+|------------------|----------|------------------------------------------|
+| `PORT`           | Yes      | Port the GraphQL server listens on       |
+| `DB_PATH`        | Yes      | Path to the SQLite database file         |
+| `FRED_URL`       | Yes      | FRED series page URL for prime rate data |
+| `SCRAPE_CRON`    | No       | Cron expression for periodic re-scraping (default: `0 0 * * *`) |
+| `SCRAPE_TIMEOUT` | No       | Scrape timeout in milliseconds (default: `120000`) |
 
-2. Start the frontend:
+Frontend variables:
+
+| Variable                | Description                        |
+|-------------------------|------------------------------------|
+| `REACT_APP_GRAPHQL_URL` | GraphQL endpoint for Apollo Client |
+| `REACT_APP_PAGE_SIZE`   | Number of loans shown per page     |
+
+### Build
 
 ```bash
-npm run dev:frontend
+npm run build:backend   # Compile backend TypeScript → dist/
+npm run build:frontend  # Bundle React app → build/
+npm run build           # Both sequentially
 ```
 
-The app opens on `http://localhost:3000`.
+### Start
+
+Run each in a separate terminal:
+
+```bash
+npm run dev:backend    # GraphQL server on http://localhost:4000
+npm run dev:frontend   # React app on http://localhost:3000
+```
+
+Database migrations run automatically on first launch.
+
 
 ---
 
