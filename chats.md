@@ -691,6 +691,22 @@ TypeScript check passed with no errors.
 
 ---
 
+## README.md
+
+**User:** Write the README.md.
+
+**Assistant:** Created `README.md` covering: Docker quick-start (`docker compose up --build`) with a note about the FRED scrape warmup window; local dev setup with env var tables for both backend and frontend; annotated project structure directory map; and a GraphQL API operations table with a link to Apollo Sandbox.
+
+---
+
+## Recreate `.env.example` Files
+
+**User:** Recreate the accidentally deleted `.env.example` files.
+
+**Assistant:** Recreated `packages/backend/.env.example` (PORT, DB_PATH, FRED_URL, SCRAPE_CRON, SCRAPE_TIMEOUT) and `packages/frontend/.env.example` (REACT_APP_GRAPHQL_URL, REACT_APP_PAGE_SIZE) matching the contents of the existing `.env` files.
+
+---
+
 ## Code Review: Full Project
 
 **User:** `/code-reviewer` — code review the whole project.
