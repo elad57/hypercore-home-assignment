@@ -1,6 +1,7 @@
 node_modules/
 */node_modules/
 dist/
+packages/frontend/build/
 data/
 *.sqlite
 .env
